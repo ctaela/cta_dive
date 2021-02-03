@@ -23,7 +23,7 @@ click==7.1.2
 colorama==0.4.3
 colour==0.1.5
 comtypes==1.1.7
-cryptography==2.8
+cryptography==3.2
 curio==0.9
 cycler==0.10.0
 decorator==4.4.2
