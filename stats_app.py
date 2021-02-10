@@ -73,8 +73,8 @@ def plot_stats(x_axis, y_axis, df, highlight=[]):
 
     
     p.add_tools(HoverTool(renderers=[r2], 
-                          tooltips=[(x_axis, "$x_axis{0000}"),
-                          ("Predicted " + y_axis, "$y_axis")]))
+                          tooltips=[(x_axis, "$x{0000}"),
+                          ("Predicted " + y_axis, "$y")]))
        
     labels = LabelSet(x=x_axis, 
                          y=y_axis, text="Player", y_offset=8,
