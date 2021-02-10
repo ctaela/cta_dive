@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 #bokeh
 from bokeh.palettes import brewer, Spectral10
 from bokeh.plotting import figure, output_file, show
-from bokeh.models import ColumnDataSource, Line
+from bokeh.models import ColumnDataSource, LabelSet, Line
 from bokeh.models.tools import HoverTool
 from bokeh.transform import linear_cmap
 from bokeh.io import output_notebook, show
@@ -131,7 +131,7 @@ x_option = st.selectbox(
     'Bouncy DT',
     'Rating'])
 
-st.write('Note:  Minimum of 50 games played.')
+st.text('Note:  Only players with a minimum of 50 games are displayed.')
 
 st.multiselect("Select players to highlight on the chart.", avg_player_stats["Player"].unique())
 
