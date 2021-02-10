@@ -133,7 +133,7 @@ x_option = st.selectbox(
 
 st.text('Note:  Only players with a minimum of 50 games are displayed.')
 
-st.multiselect("Select players to highlight on the chart.", avg_player_stats["Player"].unique())
+players = st.multiselect("Select players to highlight on the chart.", avg_player_stats["Player"].unique())
 
-plot_stats(x_option, y_option, avg_player_stats)
+plot_stats(x_option, y_option, avg_player_stats, players)
 
