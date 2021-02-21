@@ -5,7 +5,7 @@ from sklearn import linear_model
 from sklearn.model_selection import train_test_split
 
 #bokeh
-from bokeh.palettes import brewer, Spectral10
+from bokeh.palettes import brewer
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, LabelSet, Line
 from bokeh.models.tools import HoverTool
@@ -15,7 +15,13 @@ from bokeh.io import output_notebook, show
 """Interactive chart to display relationship between two statistical categories for CTA Joy games.\n 
 Individual player stats have been aggregrated across known names and each player's category averages are used to build each chart."""
 
-avg_player_stats = pd.read_csv("https://raw.githubusercontent.com/ctaela/cta_dive/master/data/avg_player_stats_all.csv")
+url = 'https://drive.google.com/file/d/1aqnN8S2R5nNALGPgBKY2FmgcZUgeEprV/view?usp=sharing'
+path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
+avg_player_stats = pd.read_csv(path)
+
+url = 'https://drive.google.com/file/d/1HILFYiYewjk2-Q7g0oFpOTYbNre3ayNs/view?usp=sharing'
+path = 'https://drive.google.com/uc?export=download&id='+url.split('/')[-2]
+historical_ratings = pd.read_csv(path, parse_dates=["Date"])
 
 def plot_stats(x_axis, y_axis, df, highlight=[]):
     
@@ -57,7 +63,7 @@ def plot_stats(x_axis, y_axis, df, highlight=[]):
     p.yaxis.axis_label = y_axis
     p.legend.location = 'top_left'
     p.legend.title = "St. Dev's from Avg " + y_axis
-    p.background_fill_color = "#dddddd"
+    p.background_fill_color = "#dddddd" 
     p.background_fill_alpha = 0.1
     
     line_x = [df[x_axis].min().item() - df[x_axis].std().item(), df[x_axis].max().item() + df[x_axis].std().item()]
@@ -82,6 +88,32 @@ def plot_stats(x_axis, y_axis, df, highlight=[]):
                   source=source2, text_align='center')
     
     p.add_layout(labels)
+
+    st.bokeh_chart(p)
+
+def plot_ratings(df, highlight):
+    colors = ["blue", "firebrick", "black", "gold"]    
+    sources = []
+    for name in highlight:
+        sources.append(ColumnDataSource(df[df["Alias"] == name].sort_values('Date', ascending=True)))
+        
+    TOOLS = 'save,pan,box_zoom,reset,wheel_zoom'
+    p = figure(title="Rating over Time", x_axis_type='datetime', y_axis_type="linear", plot_height = 400,
+               tools = TOOLS, plot_width = 800)
+    p.background_fill_color = "#dddddd"
+    p.background_fill_alpha = 0.1
+    p.title.align="center"
+    p.xaxis.axis_label = 'Date'
+    p.yaxis.axis_label = 'Rating'
+    
+    for item in sources:
+        p.line(x="Date", y="Rating",line_color=colors[sources.index(item)], line_width=1, source=item)
+
+    p.add_tools(HoverTool(tooltips=[
+                        ("Alias", "@Alias"),
+                        ("Date", "@Date{%Y-%m-%d}"),
+                        ('Rating', '@Rating')],
+                         formatters={'@Date': 'datetime'}))
 
     st.bokeh_chart(p)
 
@@ -136,4 +168,12 @@ st.text('Note:  Only players with a minimum of 50 games are displayed.')
 highlight_players = st.multiselect("Select players to highlight on the chart.", avg_player_stats["Player"].unique())
 
 plot_stats(x_option, y_option, avg_player_stats, highlight_players)
+
+"""\nHistorical Ratings Chart"""
+
+ratings_options = st.multiselect("Select players to highlight.", avg_player_stats["Player"].unique())
+
+st.text('Note:  Only the first four selections will be displayed.')
+
+plot_ratings(historical_ratings, ratings_options[:4])
 
