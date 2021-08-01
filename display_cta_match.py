@@ -37,7 +37,7 @@ game_option = st.selectbox(
 damaged_cols = []
 killed_cols = []
 
-for col in test_df[test_df["Game ID"] == game_option].dropna(axis=1).columns:
+for col in latest_stats[latest_stats["Game ID"] == game_option].dropna(axis=1).columns:
     if col not in ['Player', 'Team','Game ID', 'Player', 'Outcome', 'Team', 'Kills', 'Deaths', '+/-',
        'Flag Captures', 'Flag Attempts', 'Death Chart','Switch', 'Elected', 'Assassinations',
        'Score', 'Time Played', 'Damage Dealt', 'Damage Taken',
