@@ -34,8 +34,8 @@ weapon_tab = ['Player', 'Team', 'Laser DD', 'Laser DT', 'Missile DD','Missile DT
 game_option = st.selectbox(
     'Select game to view stats.', game_list)
 
-damaged_cols = []
-killed_cols = []
+damaged_cols = ["Game ID"]
+killed_cols = ["Game ID"]
 
 for col in latest_stats[latest_stats["Game ID"] == game_option].dropna(axis=1).columns:
     if col not in ['Player', 'Team','Game ID', 'Player', 'Outcome', 'Team', 'Kills', 'Deaths', '+/-',
@@ -51,26 +51,31 @@ for col in latest_stats[latest_stats["Game ID"] == game_option].dropna(axis=1).c
 """
 Overview
 """
-st.dataframe(data=latest_stats[latest_stats[main_tab]["Game ID"] == game_option].dropna(axis=1))
+main_tab_df = latest_stats[latest_stats[main_tab]["Game ID"] == game_option].dropna(axis=1)
+st.dataframe(data=main_tab_df)
 
 """
 Damage
 """
-st.dataframe(data=latest_stats[latest_stats[damage_tab]["Game ID"] == game_option].dropna(axis=1))
+damage_tab_df = latest_stats[latest_stats[damage_tab]["Game ID"] == game_option].dropna(axis=1)
+st.dataframe(data=damage_tab_df)
 
 """
 Weapons
 """
-st.dataframe(data=latest_stats[latest_stats[weapon_tab]["Game ID"] == game_option].dropna(axis=1))
+weapons_tab_df = latest_stats[latest_stats[weapon_tab]["Game ID"] == game_option].dropna(axis=1)
+st.dataframe(data=weapons_tab_df)
 
 """
 Matchups - Kills
 """
-st.dataframe(data=latest_stats[latest_stats[killed_cols]["Game ID"] == game_option].dropna(axis=1))
+matchups_kills_df = latest_stats[latest_stats[killed_cols]["Game ID"] == game_option].dropna(axis=1)
+st.dataframe(data=matchups_kills_df)
 
 """
 Matchups - Damage
 """
-st.dataframe(data=latest_stats[latest_stats[damaged_cols]["Game ID"] == game_option].dropna(axis=1))
+matchups_damage_df = latest_stats[latest_stats[damaged_cols]["Game ID"] == game_option].dropna(axis=1)
+st.dataframe(data=matchups_damage_df)
 
 
