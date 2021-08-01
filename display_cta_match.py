@@ -17,7 +17,7 @@ from bokeh.io import output_notebook, show
 latest_games = pd.read_csv('https://raw.githubusercontent.com/ctaela/cta_dive/master/data/reduced_games_27467.csv')
 latest_stats = pd.read_csv('https://raw.githubusercontent.com/ctaela/cta_dive/master/data/reduced_stats_27467.csv')
 
-game_list = list(test_df['Game ID'].sort_values(ascending=False).unique())
+game_list = list(latest_stats['Game ID'].sort_values(ascending=False).unique())
 
 # def show_table(df, game):
 #     source = ColumnDataSource(df[df["Game ID"] == game].sort_values(by=['Outcome', 'Kills'], ascending=False))
