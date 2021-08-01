@@ -26,10 +26,10 @@ keep_list = ['Player', 'Team','Game ID', 'Player', 'Outcome', 'Team', 'Kills', '
        'Missile DT', 'Grenade DD', 'Grenade DT', 'Bouncy DD', 'Bouncy DT']
 main_tab = ['Player', 'Outcome', 'Team', 'Kills', 'Deaths', '+/-',
        'Flag Captures', 'Flag Attempts', 'Switch', 'Elected', 'Assassinations',
-       'Score', 'Time Played']
-damage_tab = ['Player', 'Team', 'Damage Dealt', 'Damage Taken','DR', 'DKR', 'DDF', 'TDD']
+       'Score', 'Time Played', 'Game ID']
+damage_tab = ['Player', 'Team', 'Damage Dealt', 'Damage Taken','DR', 'DKR', 'DDF', 'TDD', 'Game ID']
 weapon_tab = ['Player', 'Team', 'Laser DD', 'Laser DT', 'Missile DD','Missile DT', 
-              'Grenade DD', 'Grenade DT', 'Bouncy DD', 'Bouncy DT']
+              'Grenade DD', 'Grenade DT', 'Bouncy DD', 'Bouncy DT', 'Game ID']
 
 game_option = st.selectbox(
     'Select game to view stats.', game_list)
