@@ -160,17 +160,17 @@ x_option = st.selectbox(
     'Bouncy DT',
     'Rating'])
 
-st.text('Note:  Only players with a minimum of 50 games are displayed.')
+st.text('Note:  Only players with a minimum of 35 games are displayed.')
 
 highlight_players = st.multiselect("Select players to highlight on the chart.", avg_player_stats["Player"].unique())
 
 plot_stats(x_option, y_option, avg_player_stats, highlight_players)
 
-"""\nHistorical Ratings Chart"""
+# """\nHistorical Ratings Chart"""
 
-ratings_options = st.multiselect("Select players to highlight.", avg_player_stats["Player"].unique())
+# ratings_options = st.multiselect("Select players to highlight.", avg_player_stats["Player"].unique())
 
-st.text('Note:  Only the first four selections will be displayed.')
+# st.text('Note:  Only the first four selections will be displayed.')
 
-plot_ratings(historical_ratings, ratings_options[:4])
+# plot_ratings(historical_ratings, ratings_options[:4])
 
