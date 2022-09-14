@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 
 #bokeh
 from bokeh.palettes import brewer
@@ -35,6 +36,7 @@ def plot_stats(x_axis, y_axis, df, highlight=[]):
     regr = linear_model.LinearRegression()
 
     regr.fit(X_train, y_train)
+    score = (r2_score(y_test, regr.predict(X_test)))
 
     df[y_axis + " STD"] = df[y_axis].apply(lambda a: round((a-df[y_axis].mean())/df[y_axis].std()))
     df[y_axis + " rank"] = df[y_axis].rank(ascending=False)
@@ -52,7 +54,7 @@ def plot_stats(x_axis, y_axis, df, highlight=[]):
     r1 = p.circle(x=x_axis, y=y_axis,
             source=source, size=10, color=mapper, line_color="black", legend_group= y_axis + " STD")
 
-    p.title.text = y_axis + " vs. " + x_axis
+    p.title.text = y_axis + " vs. " + x_axis + f'\nR\N{SUPERSCRIPT TWO} = {str(score)[:4]}'
     p.title.align = "center"
     p.xaxis.axis_label = x_axis
     p.yaxis.axis_label = y_axis
@@ -67,15 +69,15 @@ def plot_stats(x_axis, y_axis, df, highlight=[]):
 
     p.add_tools(HoverTool(renderers=[r1], tooltips=[
                     ("Player", "@Player"),
-                    (y_axis, "@{" + y_axis +"}{0.000}"),
+                    (y_axis, "@{" + y_axis +"}{0000}"),
                     (y_axis + " Rank", "#@{" + y_axis + " rank}"),
-                    (x_axis, "@{" + x_axis +"}{0}"),
+                    (x_axis, "@{" + x_axis +"}{0.000}"),
                     (x_axis + " Rank", "#@{" + x_axis + " rank}")]))
 
     
     p.add_tools(HoverTool(renderers=[r2], 
-                          tooltips=[(x_axis, "$x{0000}"),
-                          ("Predicted " + y_axis, "$y")]))
+                          tooltips=[(x_axis, "$x{0.000}"),
+                          ("Predicted " + y_axis, "$y{0000}")]))
        
     labels = LabelSet(x=x_axis, 
                          y=y_axis, text="Player", y_offset=8,
